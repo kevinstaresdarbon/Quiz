@@ -61,6 +61,7 @@ li:nth-child(odd) {
 
 .hide {
   display: none;
+  opacity: 0;
 }
 
 /* adapted from advice here https://blog.hubspot.com/website/css-fade-in#:~:text=CSS%20Transition%20Opacity,and%201%20being%20completely%20opaque. */
