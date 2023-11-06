@@ -55,11 +55,50 @@ li:nth-child(odd) {
 
 .wrapper {
   margin: 100px auto 0 auto;
-  max-width: 600px;
+  max-width: 900px;
+  text-align: center;
 }
 
 .hide {
   display: none;
+}
+
+/* adapted from advice here https://blog.hubspot.com/website/css-fade-in#:~:text=CSS%20Transition%20Opacity,and%201%20being%20completely%20opaque. */
+
+.fade-in-text {
+  font-family: Arial;
+  font-size: 26px;
+  animation: fadeIn 2s;
+  -webkit-animation: fadeIn 2s;
+  -moz-animation: fadeIn 2s;
+  -o-animation: fadeIn 2s;
+  -ms-animation: fadeIn 2s;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+
+@-moz-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-webkit-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-o-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+@-ms-keyframes fadeIn {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
 }
 
 .start {
