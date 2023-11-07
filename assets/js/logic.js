@@ -32,6 +32,12 @@ nameTag.setAttribute("placeholder", "ABC");
 const sfxCorrect = new Audio("./assets/sfx/correct.wav");
 const sfxIncorrect = new Audio("./assets/sfx/incorrect.wav");
 
+// add some more interesting rules to scoring
+function calcScore(){
+    var result = Math.floor(time/10) + score;
+    return result;
+}
+
 function handleStartClick() {
     // hide the splash text
     splash.setAttribute("class", "hide");
@@ -102,21 +108,23 @@ function handleSubmit() {
         return;
     } else {
         var scoreTag = nameTag.value;
+        var finalScore = calcScore();
         // if no item in local storage, create the first item
         if (!localStorage.getItem("scores")){
             var scoreTable = [];
-            scoreTable[0] = {scoreTag: scoreTag, finalScore: score };
+            scoreTable[0] = {scoreTag: scoreTag, finalScore: finalScore };
             var storageString = JSON.stringify(scoreTable);
             localStorage.setItem("scores", storageString);
         } else {
             // retrieve the array from local storage and push the next value into it, then return it to local storage
             var scoresString = localStorage.getItem("scores");
             var scoreTable = JSON.parse(scoresString);
-            scoreTable.push({scoreTag: scoreTag, finalScore: score });
+            scoreTable.push({scoreTag: scoreTag, finalScore: finalScore});
             var storageString = JSON.stringify(scoreTable);
             localStorage.setItem("scores", storageString);
         }
         
+        //re-direct to the highscores page with the .assign() method
         window.location.assign("https://kevinstaresdarbon.github.io/Quiz/highscores.html")
     }
 
@@ -172,7 +180,7 @@ function quizFinished() {
     qBox.setAttribute("class", "hide");
 
     // set the score and fade-in the endBox
-    scoreSpan.textContent = score;
+    scoreSpan.textContent = calcScore();
     endBox.setAttribute("class", "fade-in-text");
 }
 
