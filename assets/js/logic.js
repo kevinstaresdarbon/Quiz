@@ -1,3 +1,4 @@
+// initialise global variables
 var currentQ = 0;
 var score = 0;
 var time = 120;
@@ -7,10 +8,21 @@ var qBox = document.querySelector("#questions");
 var qBoxTitle = document.querySelector("#question-title");
 var aBox = document.querySelector("#choices");
 var startButton = document.querySelector("#start");
+var endBox = document.querySelector("#end-screen");
+var scoreSpan = document.querySelector("#final-score");
+var nameTag = document.querySelector("#initials");
+var submitButton = document.querySelector("#submit");
 var splash = document.querySelector("#start-screen");
 var countSpan = document.querySelector("#time");
 var timer = document.querySelector(".timer");
 
+// add the event handler to the submitButton
+submitButton.addEventListener("click", handleSubmit);
+
+// set the placeholder for the nameTag
+nameTag.setAttribute("placeholder", "ABC");
+
+// initialise the audio objects
 const sfxCorrect = new Audio("./assets/sfx/correct.wav");
 const sfxIncorrect = new Audio("./assets/sfx/incorrect.wav");
 
@@ -26,7 +38,7 @@ function handleStartClick() {
             clearInterval(countDown);
             quizFinished();
         }
-        else if (!questions[currentQ]){
+        else if (!questions[currentQ]) {
             clearInterval(countDown);
         }
         else {
@@ -39,10 +51,6 @@ function handleStartClick() {
     // to begin at the beginning...
     renderQuestion(questions[0]);
 
-}
-
-function quizFinished(){
- //handle quizFinished logic here
 }
 
 function handleAnswerClick(event) {
@@ -72,6 +80,19 @@ function handleAnswerClick(event) {
     }
 }
 
+function handleSubmit() {
+    if (nameTag.value.length > 3) {
+        alert("Too many initials.  Please enter three at most");
+    } else {
+        var scoreTag = nameTag.value;
+        var scoreTableEntry = { scoreTag: scoreTag, finalScore: score };
+        var storageString = JSON.stringify(scoreTableEntry);
+        //ensures only the latest entry gets remembered
+        localStorage.setItem(storageString.scoreTag, storageString.finalScore);
+    }
+
+    window.location.href = "https://kevinstaresdarbon.github.io/Quiz/highscores.html"
+}
 
 function renderQuestion(qObject) {
 
@@ -113,9 +134,18 @@ function renderQuestion(qObject) {
     // once iteration has finished append the ol to the choices div
     aBox.appendChild(answers);
 
-    // change the class here to create a fade-in effect for the ready to display question
+    // change the class here to create show the fade-in effect for the ready to display question
     qBox.setAttribute("class", "show");
     aBox.setAttribute("class", "show");
+}
+
+function quizFinished() {
+    // hide the qBox
+    qBox.setAttribute("class", "hide");
+
+    // set the score and fade-in the endBox
+    scoreSpan.textContent = score;
+    endBox.setAttribute("class", "fade-in-text");
 }
 
 startButton.addEventListener("click", handleStartClick);
