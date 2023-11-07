@@ -96,6 +96,7 @@ function handleSubmit() {
             localStorage.setItem("scores", storageString);
         } else {
             // retrieve the array from local storage and push the next value into it, then return it to local storage
+            var scoresString = localStorage.getItem("scores");
             var scoreTable = JSON.parse(scoresString);
             scoreTable.push({scoreTag: scoreTag, finalScore: score });
             var storageString = JSON.stringify(scoreTable);
