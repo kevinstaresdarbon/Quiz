@@ -16,8 +16,14 @@ var splash = document.querySelector("#start-screen");
 var countSpan = document.querySelector("#time");
 var timer = document.querySelector(".timer");
 
-// add the event handler to the submitButton
+// add the event handler to the submitButton and the initials field
 submitButton.addEventListener("click", handleSubmit);
+
+nameTag.addEventListener("keydown", (event) => {
+    if (event.key === 'Enter'){
+        handleSubmit();
+    }
+})
 
 // set the placeholder for the nameTag
 nameTag.setAttribute("placeholder", "ABC");
@@ -33,7 +39,7 @@ function handleStartClick() {
     timer.setAttribute("style", "color: green;")
 
     // adapted from advice on stackoverflow.com to create a blinking effect on the timer
-    
+
     countSpan.addEventListener("animationend", function(){
         countSpan.classList.remove("fade-in-text-quick");
     });
