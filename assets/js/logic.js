@@ -88,7 +88,6 @@ function handleSubmit() {
     } else {
         var scoreTag = nameTag.value;
         // if no item in local storage, create the first item
-        console.log(localStorage.getItem("scores"));
         if (!localStorage.getItem("scores")){
             var scoreTable = [];
             scoreTable[0] = {scoreTag: scoreTag, finalScore: score };
@@ -103,7 +102,7 @@ function handleSubmit() {
             localStorage.setItem("scores", storageString);
         }
         
-        // window.location.assign("https://kevinstaresdarbon.github.io/Quiz/highscores.html")
+        window.location.assign("https://kevinstaresdarbon.github.io/Quiz/highscores.html")
     }
 
 }
