@@ -40,7 +40,7 @@ input[type="text"] {
 
 ol {
   padding-left: 0px;
-  max-height: 400px;
+  max-height: 420px;
   overflow: auto;
 }
 
@@ -64,6 +64,9 @@ li:nth-child(odd) {
   opacity: 0;
 }
 
+.invisible {
+  opacity: 0;
+}
 /* adapted from advice here https://blog.hubspot.com/website/css-fade-in#:~:text=CSS%20Transition%20Opacity,and%201%20being%20completely%20opaque. */
 
 .fade-in-text {

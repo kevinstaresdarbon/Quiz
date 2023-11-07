@@ -26,16 +26,19 @@ if (scoresString){
 
     var scoresArr = JSON.parse(scoresString);
     scoresArr.sort(compareByScore);
- 
-    for (score of scoresArr){
+    // adapted from advice here: https://medium.com/@_DandyLyons/how-to-use-a-js-for-of-loop-with-an-index-a4675ed22351#:~:text=Adding%20an%20Index%20to%20the%20for...of%20Loop&text=In%20this%20modified%20loop%2C%20we,the%20value%20during%20each%20iteration to get access to the index
+
+    for (let i = 0; i < scoresArr.length; i++){
         var item = document.createElement("li");
         item.setAttribute("style", "display:flex; justify-content: space-between;")
 
+        item.classList.add("invisible");
+
         var initials = document.createElement("h3");
-        initials.textContent = score.scoreTag.toUpperCase();
+        initials.textContent = scoresArr[i].scoreTag.toUpperCase();
 
         var points = document.createElement("h3");
-        points.textContent = score.finalScore;
+        points.textContent = scoresArr[i].finalScore;
 
         item.appendChild(initials);
         item.appendChild(points);
@@ -46,6 +49,17 @@ if (scoresString){
     var msg = document.createElement("h2");
     msg.textContent = "The table is clear, go back and play my quiz!!";
     scoresTable.appendChild(msg);
+}
+
+// animate fade-ins over all the invisible items
+var showUs = document.querySelectorAll(".invisible");
+
+for(let j = 0; j < showUs.length; j++){
+    let delay = 1000*j;
+    setTimeout(()=> {
+        showUs[j].classList.remove("invisible");
+        showUs[j].classList.add("fade-in-text-quick");
+    }, delay)
 }
 
 clearBtn.addEventListener("click", handleClear);
