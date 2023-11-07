@@ -33,7 +33,7 @@ This webpage is mainly for instructional purposes but also provides a fun quiz t
   
 ## Credits
   
-The starter code at the initial starter commit, HTML and CSS files was provided by the staff of edX.  
+The starter code at the initial starter commit, HTML, CSS and sound files was provided by the staff of edX.  
 All commits after that is original work done by myself.  
 No collaboration was needed or taken on this repository and code.  
   
