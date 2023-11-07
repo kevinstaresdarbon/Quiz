@@ -29,7 +29,7 @@ const sfxIncorrect = new Audio("./assets/sfx/incorrect.wav");
 function handleStartClick() {
     // hide the splash text
     splash.setAttribute("class", "hide");
-    // change the timer countdown to yellow and start counting down
+    // change the timer countdown to green and start counting down
     timer.setAttribute("style", "color: green;")
 
     var countDown = setInterval(() => {
@@ -81,18 +81,29 @@ function handleAnswerClick(event) {
 }
 
 function handleSubmit() {
-    
+
     if (nameTag.value.length > 3) {
         alert("Too many initials.  Please enter three at most");
+        return;
     } else {
         var scoreTag = nameTag.value;
-        var scoreTableEntry = { scoreTag: scoreTag, finalScore: score };
-        var storageString = JSON.stringify(scoreTableEntry);
-        //ensures only the latest entry gets remembered
-        localStorage.setItem(storageString.scoreTag, storageString.finalScore);
+        // if no item in local storage, create the first item
+        if (!localStorage.getItem("scores")){
+            var scoreTable = [];
+            scoreTable[0] = {scoreTag: scoreTag, finalScore: score };
+            var storageString = JSON.stringify(scoreTable);
+            localStorage.setItem("scores", storageString);
+        } else {
+            // retrieve the array from local storage and push the next value into it, then return it to local storage
+            var scoreTable = JSON.parse(scoresString);
+            scoreTable.push({scoreTag: scoreTag, finalScore: score });
+            var storageString = JSON.stringify(scoreTable);
+            localStorage.setItem("scores", storageString);
+        }
+        
+        window.location.assign("https://kevinstaresdarbon.github.io/Quiz/highscores.html")
     }
 
-    window.location.assign("https://kevinstaresdarbon.github.io/Quiz/highscores.html")
 }
 
 function renderQuestion(qObject) {
