@@ -76,11 +76,18 @@ li:nth-child(odd) {
   -ms-animation: fadeIn 2s;
 }
 
+.fade-in-text-quick {
+  animation: fadeIn 0.8s;
+  -webkit-animation: fadeIn 0.8s;
+  -moz-animation: fadeIn 0.8s;
+  -o-animation: fadeIn 0.8s;
+  -ms-animation: fadeIn 0.8s;
+}
+
 @keyframes fadeIn {
   0% { opacity: 0; }
   100% { opacity: 1; }
 }
-
 
 @-moz-keyframes fadeIn {
   0% { opacity: 0; }
@@ -121,8 +128,11 @@ li:nth-child(odd) {
   border-top: 2px solid #ccc;
 }
 
+/* increased the font-size to make it more noticeable */
+
 .timer {
   position: absolute;
   top: 10px;
   right: 10px;
+  font-size: 26px;
 }

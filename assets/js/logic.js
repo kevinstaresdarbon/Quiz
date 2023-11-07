@@ -32,7 +32,16 @@ function handleStartClick() {
     // change the timer countdown to green and start counting down
     timer.setAttribute("style", "color: green;")
 
+    // adapted from advice on stackoverflow.com to create a blinking effect on the timer
+    
+    countSpan.addEventListener("animationend", function(){
+        countSpan.classList.remove("fade-in-text-quick");
+    });
+
     var countDown = setInterval(() => {
+        // creates a blinking effect
+
+        countSpan.setAttribute("class", "fade-in-text-quick");
 
         if (time < 1) {
             clearInterval(countDown);
