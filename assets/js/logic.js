@@ -1,9 +1,9 @@
 // initialise global variables
 var currentQ = 0;
 var score = 0;
-var time = 120;
+var time = 100;
 
-// get references for the divs where the questions and answers should appear, the start button, the start div and the timer
+// get the needed references
 var qBox = document.querySelector("#questions");
 var qBoxTitle = document.querySelector("#question-title");
 var aBox = document.querySelector("#choices");
@@ -20,7 +20,7 @@ var timer = document.querySelector(".timer");
 submitButton.addEventListener("click", handleSubmit);
 
 nameTag.addEventListener("keydown", (event) => {
-    if (event.key === 'Enter'){
+    if (event.key === 'Enter') {
         handleSubmit();
     }
 })
@@ -33,20 +33,20 @@ const sfxCorrect = new Audio("./assets/sfx/correct.wav");
 const sfxIncorrect = new Audio("./assets/sfx/incorrect.wav");
 
 // add some more interesting rules to scoring
-function calcScore(){
-    var result = Math.floor(time/10) + score;
+function calcScore() {
+    var result = Math.floor(time / 10) + score;
     return result;
 }
 
 function handleStartClick() {
     // hide the splash text
     splash.setAttribute("class", "hide");
-    // change the timer countdown to green and start counting down
-    timer.setAttribute("style", "color: green;")
+    // change the timer countdown to red and start counting down
+    timer.setAttribute("style", "color: red;")
 
     // adapted from advice on stackoverflow.com to create a blinking effect on the timer
 
-    countSpan.addEventListener("animationend", function(){
+    countSpan.addEventListener("animationend", function () {
         countSpan.classList.remove("fade-in-text-quick");
     });
 
@@ -96,6 +96,8 @@ function handleAnswerClick(event) {
         // render the next question
         renderQuestion(questions[currentQ]);
     } else {
+        // change the timer countdown to green. countdown has stopped
+        timer.setAttribute("style", "color: green;")
         // handle scoring
         quizFinished();
     }
@@ -104,26 +106,26 @@ function handleAnswerClick(event) {
 function handleSubmit() {
 
     if (nameTag.value.length > 3) {
-        alert("Too many initials.  Please enter three at most");
+        alert("Too many characters.  Please enter three at most");
         return;
     } else {
         var scoreTag = nameTag.value;
         var finalScore = calcScore();
         // if no item in local storage, create the first item
-        if (!localStorage.getItem("scores")){
+        if (!localStorage.getItem("scores")) {
             var scoreTable = [];
-            scoreTable[0] = {scoreTag: scoreTag, finalScore: finalScore };
+            scoreTable[0] = { scoreTag: scoreTag, finalScore: finalScore };
             var storageString = JSON.stringify(scoreTable);
             localStorage.setItem("scores", storageString);
         } else {
             // retrieve the array from local storage and push the next value into it, then return it to local storage
             var scoresString = localStorage.getItem("scores");
             var scoreTable = JSON.parse(scoresString);
-            scoreTable.push({scoreTag: scoreTag, finalScore: finalScore});
+            scoreTable.push({ scoreTag: scoreTag, finalScore: finalScore });
             var storageString = JSON.stringify(scoreTable);
             localStorage.setItem("scores", storageString);
         }
-        
+
         //re-direct to the highscores page with the .assign() method
         window.location.assign("https://kevinstaresdarbon.github.io/Quiz/highscores.html")
     }
@@ -170,7 +172,7 @@ function renderQuestion(qObject) {
     // once iteration has finished append the ol to the choices div
     aBox.appendChild(answers);
 
-    // change the class here to create show the fade-in effect for the ready to display question
+    // change the class here to show the fade-in effect for the ready to display question
     qBox.setAttribute("class", "show");
     aBox.setAttribute("class", "show");
 }
