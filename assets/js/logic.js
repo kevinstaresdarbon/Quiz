@@ -2,13 +2,48 @@ var currentQ = 0;
 var score = 0;
 var time = 120;
 
-// get references for the divs where the questions and answers should appear
+// get references for the divs where the questions and answers should appear, the start button, the start div and the timer
 var qBox = document.querySelector("#questions");
 var qBoxTitle = document.querySelector("#question-title");
 var aBox = document.querySelector("#choices");
+var startButton = document.querySelector("#start");
+var splash = document.querySelector("#start-screen");
+var countSpan = document.querySelector("#time");
+var timer = document.querySelector(".timer");
 
 const sfxCorrect = new Audio("./assets/sfx/correct.wav");
 const sfxIncorrect = new Audio("./assets/sfx/incorrect.wav");
+
+function handleStartClick() {
+    // hide the splash text
+    splash.setAttribute("class", "hide");
+    // change the timer countdown to yellow and start counting down
+    timer.setAttribute("style", "color: green;")
+
+    var countDown = setInterval(() => {
+
+        if (time < 1) {
+            clearInterval(countDown);
+            quizFinished();
+        }
+        else if (!questions[currentQ]){
+            clearInterval(countDown);
+        }
+        else {
+            time--;
+            countSpan.textContent = time;
+        }
+    }, 1000);
+
+
+    // to begin at the beginning...
+    renderQuestion(questions[0]);
+
+}
+
+function quizFinished(){
+ //handle quizFinished logic here
+}
 
 function handleAnswerClick(event) {
 
@@ -28,9 +63,15 @@ function handleAnswerClick(event) {
     aBox.innerHTML = "";
     currentQ += 1;
 
-    // render the next question
-    renderQuestion(questions[currentQ]);
+    if (questions[currentQ]) {
+        // render the next question
+        renderQuestion(questions[currentQ]);
+    } else {
+        // handle scoring
+        quizFinished();
+    }
 }
+
 
 function renderQuestion(qObject) {
 
@@ -64,12 +105,10 @@ function renderQuestion(qObject) {
 
         // append the button to the li
         option.appendChild(select);
-        // append the li to the ol
+        // append the li to the ol and fade it in
         answers.appendChild(option);
         answers.setAttribute("class", "fade-in-text");
     }
-
-
 
     // once iteration has finished append the ol to the choices div
     aBox.appendChild(answers);
@@ -79,4 +118,4 @@ function renderQuestion(qObject) {
     aBox.setAttribute("class", "show");
 }
 
-renderQuestion(questions[currentQ]);
+startButton.addEventListener("click", handleStartClick);
