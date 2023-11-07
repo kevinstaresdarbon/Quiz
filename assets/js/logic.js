@@ -81,6 +81,7 @@ function handleAnswerClick(event) {
 }
 
 function handleSubmit() {
+    
     if (nameTag.value.length > 3) {
         alert("Too many initials.  Please enter three at most");
     } else {
@@ -91,7 +92,7 @@ function handleSubmit() {
         localStorage.setItem(storageString.scoreTag, storageString.finalScore);
     }
 
-    window.location.href = "https://kevinstaresdarbon.github.io/Quiz/highscores.html"
+    window.location.assign("https://kevinstaresdarbon.github.io/Quiz/highscores.html")
 }
 
 function renderQuestion(qObject) {
